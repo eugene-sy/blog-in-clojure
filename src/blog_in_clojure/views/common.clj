@@ -1,6 +1,7 @@
 (ns blog-in-clojure.views.common
   (:use [noir.core :only [defpartial]]
-        [hiccup.page :only [include-css include-js html5]]))
+        [hiccup.page]
+        [hiccup.element]))
 
 
 ; list of includes
@@ -12,17 +13,35 @@
 						:blog-js (include-js "/js/blog.js")
 						})
 
+; list of items in top-right menu
+(def menu-items {:posts (link-item 
+										(link-to "/posts/" "Blog"))
+								 :about (link-item 
+								 		(link-to "/about/" "About"))
+								 :contact (link-item 
+								 		(link-to "/contact/" "Contact"))
+								 })
+
 ; some page templates
 (defpartial set-head [incs]
 	[:head
     [:title "blog-in-clojure"]
       (map #(get incls %) incs)])
 
+(defpartial link-item [item]
+	[:li item])
+
+(defpartial top-links [link-items]
+	[:ul.nav.nav-pills.pull-right
+		(map #(get menu-items %) link-items)])
+
 (defpartial set-body-wrapper [& content]
 	[:body
 		[:div.container-narrow
       [:div.masthead
-        [:h3.muted "blog-in-clojure" ]]
+      (top-links [:posts :about :contact])
+        [:h3.muted "blog-in-clojure" ]
+        ]
       [:hr]
       [:div.container content]
       [:hr]
