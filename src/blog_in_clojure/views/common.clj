@@ -14,12 +14,12 @@
 						})
 
 ; list of items in top-right menu
-(def menu-items {:posts (link-item 
-										(link-to "/posts/" "Blog"))
-								 :about (link-item 
-								 		(link-to "/about/" "About"))
-								 :contact (link-item 
-								 		(link-to "/contact/" "Contact"))
+(def menu-items {:posts  
+										(link-to "/posts/" "Blog")
+								 :about 
+								 		(link-to "/about/" "About")
+								 :contact
+								 		(link-to "/contact/" "Contact")
 								 })
 
 ; some page templates
@@ -28,25 +28,33 @@
     [:title "blog-in-clojure"]
       (map #(get incls %) incs)])
 
-(defpartial link-item [item]
+(defpartial list-item [item]
 	[:li item])
 
 (defpartial top-links [link-items]
 	[:ul.nav.nav-pills.pull-right
-		(map #(get menu-items %) link-items)])
+		(map list-item 
+			(map #(get menu-items %) link-items))])
+
+(defpartial footer [] 
+	[:div#footer
+    [:div.container-narrow
+    	[:hr]
+      [:p.muted.credit 
+      	"Created by " 
+      	[:a {:href "https://github.com/Axblade"} "Axblade"]
+      	" in 2013"]]])
 
 (defpartial set-body-wrapper [& content]
 	[:body
-		[:div.container-narrow
-      [:div.masthead
-      (top-links [:posts :about :contact])
-        [:h3.muted "blog-in-clojure" ]
-        ]
-      [:hr]
-      [:div.container content]
-      [:hr]
-      [:div.footer
-        [:p "© Company 2013"]]]])
+		[:div#wrap
+			[:div.container-narrow
+    	  [:div.masthead
+    	  (top-links [:posts :about :contact])
+    	    [:h3.muted "blog-in-clojure" ]]
+    	  [:hr]
+    	  [:div.container content]]]
+    (footer)])
 
 ; default layout
 (defpartial layout 
