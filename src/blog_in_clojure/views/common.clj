@@ -3,7 +3,7 @@
         [hiccup.page :only [include-css html5]]))
 
 (defpartial layout 
-	[page-name & content]
+	[& content]
     (html5
       [:head
        [:title "blog-in-clojure"]

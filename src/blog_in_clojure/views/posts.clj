@@ -1,6 +1,15 @@
 (ns blog-in-clojure.views.posts
-  (:require [blog-in-clojure.views.common :as common])
+  (:require [blog-in-clojure.views.common :as common]
+  					[noir.response :as resp])
   (:use [noir.core]))
+
+; default redirect
+(defpage "/" []
+	(resp/redirect "/posts/"))
+
+; post redirect
+(defpage "/posts" []
+	(resp/redirect "/posts/"))
 
 ; show list of posts
 (defpage "/posts/" []
