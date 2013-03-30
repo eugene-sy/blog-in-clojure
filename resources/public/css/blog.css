@@ -1,0 +1,8 @@
+.container-narrow {
+	margin: 0 auto;
+  width: 700px;
+}
+
+.container {
+	min-height: 500px;
+}
