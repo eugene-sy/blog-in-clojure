@@ -1,6 +1,7 @@
 (ns blog-in-clojure.views.blog
   (:require [blog-in-clojure.views.common :as common]
-  					[noir.response :as resp])
+  					[noir.response :as resp]
+  					[blog-in-clojure.helpers.markdown :as md])
   (:use [noir.core]))
 
 (defpage "/about" []
@@ -11,9 +12,11 @@
 
 (defpage "/about/" []
 	(common/layout
-		[:p "About this blog"]))
+		[:div 
+			(md/render-file "resources/assets/about.md")]))
 
 (defpage "/contact/" []
 	(common/layout
-		[:p "Contact me!"]))
+		[:div 
+			(md/render-file "resources/assets/contact.md")]))
 
