@@ -1,5 +1,6 @@
 (ns blog-in-clojure.server
-  (:require [noir.server :as server]))
+  (:require [noir.server :as server]
+  					[blog-in-clojure.models :as models]))
 
 (server/load-views-ns 'blog-in-clojure.views)
 
