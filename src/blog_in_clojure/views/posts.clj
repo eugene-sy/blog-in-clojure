@@ -1,7 +1,20 @@
 (ns blog-in-clojure.views.posts
   (:require [blog-in-clojure.views.common :as common]
-  					[noir.response :as resp])
+  					[blog-in-clojure.models.post :as post]
+  					[noir.response :as resp]
+  					[clojure.core :as core])
   (:use [noir.core]))
+
+; some partials here
+
+(defpartial short-post [post] 
+	[:div.post-container
+		[:h3 "Title"]
+		[:div.post-body-trunkated "Post body here"]])
+
+(defpartial post-list [posts]
+	[:div.posts
+		(core/mapcat short-post posts)])
 
 ; default redirect
 (defpage "/" []
@@ -14,7 +27,8 @@
 ; show list of posts
 (defpage "/posts/" []
 	(common/layout
-		[:p "Some posts here"]))
+		(post-list
+			(post/find-all))))
 
 ; show selected post
 (defpage "/posts/:id" {:keys[id]}
