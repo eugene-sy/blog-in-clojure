@@ -12,30 +12,30 @@
 	(if (> total 0)
 		(mq/with-collection collection
 			(mq/find {})
-			(mq/fields [:post])
+			(mq/fields [:uid])
 			(mq/sort 
-				(sorted-map :post -1 :created -1))
+				(sorted-map :uid -1 :created -1))
 			(mq/limit 1))
 		1))
 
-(defn get-uid [] 
-	(inc (max-id :post)))
+(defn get-new-uid [] 
+	(inc (max-id :uid)))
 
 (defn find-all []
 	(mc/find-maps collection))
 
 (defn find-one [id]
-	(mc/find-one-as-map collection {:post id}))
+	(mc/find-one-as-map collection {:uid (Double/parseDouble id)}))
 
 (defn create [title body]
 	(mc/insert collection 
-		{:post get-uid
+		{:uid get-new-uid
 		:title title
 		:body body
 		:created (ch/now)}))
 
 (defn update [id title body]
-	(mc/update {:post id} {:title title :body body}))
+	(mc/update {:uid id} {:title title :body body}))
 
 (defn delete [id]
-	(mc/remove {:post id}))
+	(mc/remove {:uid id}))

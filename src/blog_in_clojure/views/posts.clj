@@ -31,7 +31,9 @@
 	[:div.post 
 		[:h3 (post :title)]
 		[:div.post-body
-			(post :body)]])
+			(post :body)]
+		[:a {:href "/posts/"} 
+			[:span [:i.icon-arrow-left] "Back"]]])
 
 ; default redirect
 (defpage "/" []
