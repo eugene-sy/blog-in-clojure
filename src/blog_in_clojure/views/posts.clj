@@ -4,13 +4,21 @@
   					[blog-in-clojure.helpers.common :as ch]
   					[noir.response :as resp]
   					[clojure.core :as core])
-  (:use [noir.core]))
+  (:use [noir.core]
+  			[hiccup.page]
+        [hiccup.element]))
 
 ; some partials here
 
 (defpartial short-post [post] 
 	[:div.post-container
-		[:h3 (post :title)]
+		[:a 
+			{:href 
+				(apply str 
+					(concat 
+						["/posts/" 
+							(int (post :uid))]))}
+			[:h3 (post :title)]]
 		[:div.post-body-trunkated 
 			(ch/truncate 
 				(post :body))]])
