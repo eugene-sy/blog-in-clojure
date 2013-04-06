@@ -1,6 +1,7 @@
 (ns blog-in-clojure.views.posts
   (:require [blog-in-clojure.views.common :as common]
   					[blog-in-clojure.models.post :as post]
+  					[blog-in-clojure.helpers.common :as ch]
   					[noir.response :as resp]
   					[clojure.core :as core])
   (:use [noir.core]))
@@ -9,8 +10,10 @@
 
 (defpartial short-post [post] 
 	[:div.post-container
-		[:h3 "Title"]
-		[:div.post-body-trunkated "Post body here"]])
+		[:h3 (post :title)]
+		[:div.post-body-trunkated 
+			(ch/truncate 
+				(post :body))]])
 
 (defpartial post-list [posts]
 	[:div.posts
