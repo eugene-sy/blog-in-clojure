@@ -27,6 +27,12 @@
 	[:div.posts
 		(core/mapcat short-post posts)])
 
+(defpartial full-post [post]
+	[:div.post 
+		[:h3 (post :title)]
+		[:div.post-body
+			(post :body)]])
+
 ; default redirect
 (defpage "/" []
 	(resp/redirect "/posts/"))
@@ -43,8 +49,11 @@
 
 ; show selected post
 (defpage "/posts/:id" {:keys[id]}
-	(common/layout
-		[:p "A simple post here"]))
+	(let [post (post/find-one id)]
+		(common/layout
+			(if (not (nil? post))
+				(full-post post)
+				"Sorry, there is no post with that id"))))
 
 ; show creation form
 (defpage "/posts/create" []

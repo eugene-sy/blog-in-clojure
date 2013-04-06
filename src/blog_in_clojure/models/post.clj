@@ -5,32 +5,37 @@
 
 (def collection "posts")
 
+(defn total []
+	(mc/count collection))
+
 (defn max-id []
-	(mq/with-collection collection
-		(mq/find {})
-		(mq/fields [:uid])
-		(mq/sort 
-			(sorted-map :uid -1 :created -1))
-		(mq/limit 1)))
+	(if (> total 0)
+		(mq/with-collection collection
+			(mq/find {})
+			(mq/fields [:post])
+			(mq/sort 
+				(sorted-map :post -1 :created -1))
+			(mq/limit 1))
+		1))
 
 (defn get-uid [] 
-	(inc (max-id :uid)))
+	(inc (max-id :post)))
 
 (defn find-all []
 	(mc/find-maps collection))
 
 (defn find-one [id]
-	(mc/find-one-as-map collection {:uid id}))
+	(mc/find-one-as-map collection {:post id}))
 
 (defn create [title body]
-		(mc/insert collection 
-			{:uid get-uid
-			:title title
-			:body body
-			:created (ch/now)}))
+	(mc/insert collection 
+		{:post get-uid
+		:title title
+		:body body
+		:created (ch/now)}))
 
 (defn update [id title body]
-	(mc/update {:uid id} {:title title :body body}))
+	(mc/update {:post id} {:title title :body body}))
 
 (defn delete [id]
-	(mc/remove {:uid id}))
+	(mc/remove {:post id}))
