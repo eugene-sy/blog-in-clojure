@@ -78,6 +78,7 @@
 			(common/add-cancel-button "/posts/"))))
 
 (defpage [:post "/posts/create"] {:as post}
+	(post/create (post :title) (post :body))
 	(resp/redirect "/posts/"))
 
 ; edit post
