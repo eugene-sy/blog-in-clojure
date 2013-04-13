@@ -1,12 +1,13 @@
 (ns blog-in-clojure.models.post
 	(:require [monger.collection :as mc]
 						[monger.query :as mq]
-						[blog-in-clojure.helpers.common :as ch]))
+						[blog-in-clojure.helpers.common :as ch])
+	(:use monger.operators))
 
 (def collection "posts")
 
 (defn total []
-	(:h (mc/count collection)))
+	(mc/count collection))
 
 (defn max-id []
 	(if (mc/any? collection)
@@ -37,7 +38,9 @@
 		:created (ch/now)}))
 
 (defn update [id title body]
-	(mc/update {:uid id} {:title title :body body}))
+	(mc/update collection 
+		{:uid (Double/parseDouble id)} 
+		{$set {:title title :body body}}))
 
 (defn delete [id]
-	(mc/remove {:uid id}))
+	(mc/remove collection {:uid (Double/parseDouble id)}))

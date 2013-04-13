@@ -12,6 +12,7 @@
 ; some partials here
 
 (defpartial short-post [post] 
+	(println post)
 	[:div.post-container
 		[:a 
 			{:href 
@@ -87,8 +88,10 @@
 	(common/layout
 		(form-to [:post (str "/posts/" id "/edit")]
 			(post-form post)
-			(common/add-submit-button "Add post")
+			(common/add-submit-button "Save post")
 			(common/add-cancel-button "/posts/")))))
 
-(defpage [:post "/posts/:id/edit" ] {:as post}
-	(resp/redirect "/posts/"))
+(defpage [:post "/posts/:id/edit" ] {:keys [id] :as post}
+	  (println post)
+		(post/update id (post :title) (post :body))
+		(resp/redirect "/posts/"))
