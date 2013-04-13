@@ -77,11 +77,17 @@
 			(common/add-submit-button "Add post")
 			(common/add-cancel-button "/posts/"))))
 
+(defpage [:post "/posts/create"] {:as post}
+	(resp/redirect "/posts/"))
+
 ; edit post
 (defpage "/posts/:id/edit" {:keys [id]}
 	(let [post (post/find-one id)] 
 	(common/layout
-		(form-to [:post "/posts/create"]
+		(form-to [:post (str "/posts/" id "/edit")]
 			(post-form post)
 			(common/add-submit-button "Add post")
 			(common/add-cancel-button "/posts/")))))
+
+(defpage [:post "/posts/:id/edit" ] {:as post}
+	(resp/redirect "/posts/"))
