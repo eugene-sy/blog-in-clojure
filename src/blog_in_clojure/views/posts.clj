@@ -4,9 +4,10 @@
   					[blog-in-clojure.helpers.common :as ch]
   					[noir.response :as resp]
   					[clojure.core :as core])
-  (:use [noir.core]
-  			[hiccup.page]
-        [hiccup.element]))
+  (:use noir.core
+        hiccup.core
+        hiccup.page
+        hiccup.form))
 
 ; some partials here
 
@@ -21,9 +22,14 @@
 			[:h3 (post :title)]]
 		[:div.post-body-trunkated 
 			(ch/truncate 
-				(post :body))]])
+				(post :body))]
+		[:div.links 
+			[:a {:href (str "/posts/" (int (post :uid)) "/edit")} "Edit"]
+			[:a {:href (str "/posts/" (int (post :uid)) "/delete")} "Delete"]]])
 
 (defpartial post-list [posts]
+	[:div.links.right
+		[:a {:href "/posts/create"} "Add new post"]]
 	[:div.posts
 		(core/mapcat short-post posts)])
 
@@ -32,8 +38,14 @@
 		[:h3 (post :title)]
 		[:div.post-body
 			(post :body)]
-		[:a {:href "/posts/"} 
-			[:span [:i.icon-arrow-left] "Back"]]])
+		(common/add-cancel-button "/posts/")])
+
+(defpartial post-form [{:keys [title body]}]
+	[:div
+		(label :title "Text:")
+		(text-field {:placeholder "Title"} :title title)
+		(label :title "Body:")
+		(text-area  {:placeholder "Body"} :body body)])
 
 ; default redirect
 (defpage "/" []
@@ -58,11 +70,18 @@
 				"Sorry, there is no post with that id"))))
 
 ; show creation form
-(defpage "/posts/create" []
+(defpage "/posts/create" {:as post}
 	(common/layout
-		[:p "Form to create post"]))
+		(form-to [:post "/posts/create"]
+			(post-form post)
+			(common/add-submit-button "Add post")
+			(common/add-cancel-button "/posts/"))))
 
 ; edit post
 (defpage "/posts/:id/edit" {:keys [id]}
+	(let [post (post/find-one id)] 
 	(common/layout
-		[:p "Form to create post"]))
+		(form-to [:post "/posts/create"]
+			(post-form post)
+			(common/add-submit-button "Add post")
+			(common/add-cancel-button "/posts/")))))

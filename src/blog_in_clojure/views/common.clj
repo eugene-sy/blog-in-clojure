@@ -1,7 +1,8 @@
 (ns blog-in-clojure.views.common
   (:use [noir.core :only [defpartial]]
         [hiccup.page]
-        [hiccup.element]))
+        [hiccup.element]
+        [hiccup.form]))
 
 
 ; list of includes
@@ -53,8 +54,15 @@
     	  (top-links [:posts :about :contact])
     	    [:h3.muted "blog-in-clojure" ]]
     	  [:hr]
-    	  [:div.container content]]]
+    	  [:div.container-narrow content]]]
     (footer)])
+
+(defpartial add-submit-button [title]
+	(submit-button {:class "btn btn-primary submit"} title))
+
+(defpartial add-cancel-button [backUrl]
+	[:a.btn {:href backUrl} 
+			[:span [:i.icon-arrow-left] "Back"]])
 
 ; default layout
 (defpartial layout 

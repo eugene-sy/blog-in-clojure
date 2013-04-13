@@ -3,6 +3,10 @@
   width: 700px;
 }
 
+.container-narrow a {
+  margin-left: 10px;
+}
+
 #footer .container-narrow {
 	text-align: center;
 }
@@ -11,10 +15,23 @@ div.post-body {
   width: 700px;
 }
 
+div.links {
+  margin: 5px 0;
+}
+
+div.links.right {
+  float: right;
+}
+
 /* bootstrap sticky footer */
 html,body {
   height: 100%;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0;
+}
+
 
 /* Wrapper for page content to push down footer */
 #wrap {
