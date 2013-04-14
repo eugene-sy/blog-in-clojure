@@ -18,7 +18,7 @@
 				(mq/sort 
 					(sorted-map :uid -1 :created -1))
 				(mq/limit 1)))
-		1))
+		{:uid 1}))
 
 (defn get-new-uid [] 
 	(inc 
