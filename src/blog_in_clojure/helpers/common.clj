@@ -11,4 +11,3 @@
 
 (defn now [] 
 	(new java.util.Date))
-

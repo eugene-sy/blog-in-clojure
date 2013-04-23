@@ -92,6 +92,5 @@
 			(common/add-cancel-button "/posts/")))))
 
 (defpage [:post "/posts/:id/edit" ] {:keys [id] :as post}
-	  (println post)
 		(post/update id (post :title) (post :body))
 		(resp/redirect "/posts/"))
