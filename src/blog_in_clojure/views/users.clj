@@ -15,8 +15,14 @@
 (defpage "/login/" []
 	(common/layout "Login form here"))
 
+(defpage [:post "/login/"] {:as user}
+	(resp/redirect "/posts/"))
+
 (defpage "/users/create" []
 	(resp/redirect "/users/create/"))
 
 (defpage "/users/create/" []
 	(common/layout "Registration form here"))
+
+(defpage [:post "/users/create/"] {:as user}
+	(resp/redirect "/posts/"))
