@@ -12,7 +12,6 @@
 ; some partials here
 
 (defpartial short-post [post] 
-	(println post)
 	[:div.post-container
 		[:a 
 			{:href 

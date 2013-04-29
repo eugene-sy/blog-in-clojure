@@ -21,6 +21,10 @@
 								 		(link-to "/about/" "About")
 								 :contact
 								 		(link-to "/contact/" "Contact")
+								 :register
+								 		(link-to "/users/create" "Sign up")
+								 :login
+								 		(link-to "/login" "Log in")
 								 })
 
 ; some page templates
@@ -51,7 +55,7 @@
 		[:div#wrap
 			[:div.container-narrow
     	  [:div.masthead
-    	  (top-links [:posts :about :contact])
+    	  (top-links [:posts :about :contact :register :login])
     	    [:h3.muted "blog-in-clojure" ]]
     	  [:hr]
     	  [:div.container-narrow content]]]

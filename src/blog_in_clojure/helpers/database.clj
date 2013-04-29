@@ -19,4 +19,4 @@
 
 (defn get-new-uid [collection] 
 	(inc 
-		(:uid (max-id collection))))
+		{:uid (max-id collection)}))
