@@ -1,6 +1,6 @@
 (ns blog-in-clojure.views.users
   (:require [blog-in-clojure.views.common :as common]
-  					[blog-in-clojure.models.post :as post]
+  					[blog-in-clojure.models.user :as user]
   					[blog-in-clojure.helpers.common :as ch]
   					[noir.response :as resp]
   					[clojure.core :as core])
@@ -14,9 +14,9 @@
 (defpartial sign-up-form [] 
 	[:div
 		(label :name "Name:")
-		(text-field {:placeholder "Name"} :title "")
+		(text-field {:placeholder "Name"} :name "")
 		(label :email "Email:")
-		(text-field  {:placeholder "e-mail"} :body "")
+		(text-field  {:placeholder "e-mail"} :email "")
 		(label :password "Password:")
 		(text-field  {:placeholder "password"} :password "")
 		(label :confirmation "Password confirmation:")
@@ -37,10 +37,16 @@
 	(resp/redirect "/users/create/"))
 
 (defpage "/users/create/" []
-	(common/layout 
-		(sign-up-form)
-		(common/add-submit-button "Register")
-		(common/add-cancel-button "/posts/")))
+	(common/layout
+		(form-to [:post "/users/create/"] 
+			(sign-up-form)
+			(common/add-submit-button "Register")
+			(common/add-cancel-button "/posts/"))))
 
 (defpage [:post "/users/create/"] {:as user}
+	(user/create 
+		(user :name)
+		(user :email)
+		(user :password)
+		true)
 	(resp/redirect "/posts/"))

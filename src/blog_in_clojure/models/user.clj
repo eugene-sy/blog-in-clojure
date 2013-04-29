@@ -27,7 +27,7 @@
 
 (defn create [name email password editor]
 	(mc/insert collection 
-		{(db/get-new-uid)
+		{:uid (db/get-new-uid collection)
 		:name name
 		:email email
 		:password password
@@ -36,11 +36,11 @@
 
 (defn update [id name email password editor]
 	(mc/update collection 
-		(gen-uid id) 
+		{:uid (db/gen-uid id) }
 		{$set {:name name
 			:email email
 			:password password
 			:editor editor}}))
 
 (defn delete [id]
-	(mc/remove collection (gen-uid id)}))
+	(mc/remove collection (db/gen-uid id)))

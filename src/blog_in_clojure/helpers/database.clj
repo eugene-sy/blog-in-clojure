@@ -1,4 +1,7 @@
-(ns blog-in-clojure.helpers.database)
+(ns blog-in-clojure.helpers.database
+	(:require [monger.collection :as mc]
+						[monger.query :as mq])
+	(:use monger.operators))
 
 (defn total [collection]
 	(mc/count collection))
@@ -19,4 +22,4 @@
 
 (defn get-new-uid [collection] 
 	(inc 
-		{:uid (max-id collection)}))
+		(:uid (max-id collection))))
