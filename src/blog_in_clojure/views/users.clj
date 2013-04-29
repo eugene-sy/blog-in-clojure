@@ -9,6 +9,21 @@
         hiccup.page
         hiccup.form))
 
+; user partials
+
+(defpartial sign-up-form [] 
+	[:div
+		(label :name "Name:")
+		(text-field {:placeholder "Name"} :title "")
+		(label :email "Email:")
+		(text-field  {:placeholder "e-mail"} :body "")
+		(label :password "Password:")
+		(text-field  {:placeholder "password"} :password "")
+		(label :confirmation "Password confirmation:")
+		(text-field  {:placeholder "password again"} :confirmation "")])
+
+; user pages
+
 (defpage "/login" []
 	(resp/redirect "/login/"))
 
@@ -22,7 +37,10 @@
 	(resp/redirect "/users/create/"))
 
 (defpage "/users/create/" []
-	(common/layout "Registration form here"))
+	(common/layout 
+		(sign-up-form)
+		(common/add-submit-button "Register")
+		(common/add-cancel-button "/posts/")))
 
 (defpage [:post "/users/create/"] {:as user}
 	(resp/redirect "/posts/"))

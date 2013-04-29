@@ -44,7 +44,7 @@
 	[:div
 		(label :title "Text:")
 		(text-field {:placeholder "Title"} :title title)
-		(label :title "Body:")
+		(label :body "Body:")
 		(text-area  {:placeholder "Body"} :body body)])
 
 ; default redirect
