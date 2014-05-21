@@ -1,7 +1,6 @@
 # blog-in-clojure
 
-Simple blog, written in Clojure and Noir. 
-Just a "Hello, world!" in Clojure.
+This app was initially written with noir web framework. As it is not developed now, this project will be rewritten with Compojure.
 
 ## Environment
 
