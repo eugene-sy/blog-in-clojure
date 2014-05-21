@@ -7,6 +7,6 @@
                                     [org.markdownj/markdownj "0.3.0-1.0.2b4"]
                                     [com.novemberain/monger "2.0.0-rc1"]]
             :plugins [[lein-ring "0.8.10"]]
-            :ring {:handler blog-in-clojure.server/handler}
+            :ring {:handler blog-in-clojure.server/app}
             :main blog-in-clojure.server)
 
